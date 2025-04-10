@@ -15,7 +15,7 @@ const NavBar = () => {
         <>
           <nav className="flex justify-between items-center fixed z-50 w-full h-28 bg-gray-200 px-10 gap-4 shadow-2xl">
               {/* Logo */}
-              <Link href="/" className="flex items-center gap-1 hover:scale-150 duration-500 ">
+              <Link href="/" className="flex items-center gap-1 scale-hover">
                 <Image
                   src="/assets/logo.svg"
                   width={60}
@@ -35,7 +35,7 @@ const NavBar = () => {
                         href={item.route}
                         key={item.label}
                         className={
-                          cn('flex gap-4 items-center p-4 rounded-lg justify-start hover:scale-150 duration-300 ',
+                          cn('flex gap-4 items-center p-4 rounded-lg justify-start scale-hover',
                             isActive && 'bg-blue-100 rounded-3xl'
                           )
                         }
@@ -61,7 +61,7 @@ const NavBar = () => {
               </section>
 
               {/* User button */}
-              <div className='hover:scale-150 duration-500 '>
+              <div className='scale-hover'>
                 <SignedIn>
                     {/* Mount the UserButton component */}
                     <UserButton
