@@ -21,12 +21,12 @@ const StreamProvider = ({ children }: {children:
             if(!isLoaded || !user) return;
             if(!API_KEY) throw new Error("Stream API key not found");
             const client = new StreamVideoClient({
-                apiKey: API_KEY,
                 user:{
                     id: user?.id,
                     name: user.firstName || user?.username || 'User',
                     image: user?.imageUrl,
                 },
+                apiKey: API_KEY,
                 tokenProvider,
             });
 
@@ -40,6 +40,7 @@ const StreamProvider = ({ children }: {children:
         }, [user,isLoaded])
 
         // 如果没有视频客户端则返回加载组件
+        
         if(!videoClient) return <Loading />;
 
         // props中添加视频客户端
