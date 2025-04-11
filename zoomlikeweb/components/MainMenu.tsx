@@ -5,12 +5,14 @@ import MenuItemCard from "./MenuItemCard"
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "./ui/dialog"
 import { Textarea } from "./ui/textarea"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import DatePicker from "react-datepicker"
 import { useUser } from "@clerk/nextjs"
 import Loading from "./Loading"
+import { useStreamVideoClient } from "@stream-io/video-react-sdk"
+import { toast } from "sonner"
 
 const initialValues = {
     dateTime:new Date(),
@@ -19,12 +21,81 @@ const initialValues = {
 };
 
 const MainMenu = () => {
-    const user = useUser();
+    const {user} = useUser(); // 对象解构：从user中提取属性并将其赋值给变量
     const router = useRouter();
     const [values, setValues] = useState(initialValues);
     const [meetingState, setMeetingState] = useState<'Schedule' | 'Instant' | undefined>(undefined);
+    const client = useStreamVideoClient();
 
-    if(!user) return router.push('/login');
+    const createMeeting = async() => {
+        if(!user) return router.push('/login');
+        // 如果没有客户端则返回首页
+        if(!client) return router.push('/');
+
+        try {
+            if(!values.dateTime){
+                toast('Please select a date and time', {
+                    duration: 3000,
+                    className: 'bg-gray-300 rounded-3xl py-8 px-5 justify-center'
+                });
+                return;
+            }
+
+            // 使用crypto生成随机id
+            const id = crypto.randomUUID();
+            const call = client.call('default',id);
+            if(!call) throw new Error('Failed to create meeting');
+            // 如果不存在就创建一个新日期
+            const startsAt = values.dateTime.toISOString() || new Date(Date.now()).toISOString();
+            const description = values.description || 'No description';
+            await call.getOrCreate({
+                data: {
+                    starts_at: startsAt,
+                    custom:{
+                        description,
+                    },
+                },
+            });
+
+            // 更新通话成员
+            await call.updateCallMembers({
+                update_members: [{ user_id: user.id}],
+            })
+
+            // 如果是立即会议则直接进入会议页面
+            if(meetingState === 'Instant'){
+                router.push(`/meeting/${call.id}`);
+                toast('Setting up your meeting',{
+                    duration: 3000,
+                    className: '!bg-gray-300 !rounded-3xl !py-8 !px-5 !justify-center'
+                });
+            }
+
+            // 如果是计划会议则跳转至upcoming页面
+            if(meetingState === 'Schedule'){
+                router.push('/upcoming')
+                toast(`Your meeting is scheduled at ${values.dateTime}`,{
+                    duration: 5000,
+                    className: '!bg-gray-300 !rounded-3xl !py-8 !px-5 !justify-center'
+                });
+            }
+
+        } catch(err:any) {
+            toast(`Failed to create meeting ${err.message}`, {
+                duration: 3000,
+                className: '!ng-gray-300 !rounded-3xl !py-8 !px-5 !justify-center',
+            })
+        }
+    }
+
+    // 如果meetingState发生变化则调用createMeeting
+    useEffect(() => {
+        if(meetingState) {
+            createMeeting();
+        }
+    },[meetingState])
+
+    if(!client || !user) return <Loading />;
 
     return (
         // 创建首页四个方块
