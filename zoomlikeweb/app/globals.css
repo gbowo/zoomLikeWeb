@@ -163,5 +163,25 @@
       scale(1.1);          /* 对应hover:scale-110 */
       background-color: var(--card-hover-bg);
   }
+
+  .inputs {
+    @apply !bg-gray-100 focus-visible:!ring-0 focus-visible:!ring-offset-0 !rounded-4xl
+  }
+
+  .hover-button {
+    transition: ease-in-out delay-75 duration-700;
+    cursor: pointer;
+  }
+
+  .hover-button:hover {
+    background-color: #043566 !important; /* 调整背景颜色以使颜色变深 */
+    transform: translateY(-1px) scale(1.1);
+  }
+
+  .hover-button:focus {
+      outline: none;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 根据设计调整 */
+  }
 }
 

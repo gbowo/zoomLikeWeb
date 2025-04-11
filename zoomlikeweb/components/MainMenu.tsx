@@ -9,6 +9,8 @@ import { useState } from "react"
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import DatePicker from "react-datepicker"
+import { useUser } from "@clerk/nextjs"
+import Loading from "./Loading"
 
 const initialValues = {
     dateTime:new Date(),
@@ -17,9 +19,12 @@ const initialValues = {
 };
 
 const MainMenu = () => {
+    const user = useUser();
     const router = useRouter();
     const [values, setValues] = useState(initialValues);
     const [meetingState, setMeetingState] = useState<'Schedule' | 'Instant' | undefined>(undefined);
+
+    if(!user) return router.push('/login');
 
     return (
         // 创建首页四个方块
@@ -45,7 +50,7 @@ const MainMenu = () => {
                             setValues({...values, description: e.target.value})} 
                             />
 
-                            <Button className="mt-5 font-extrabold text-lg text-white rounded-xl bg-blue-700 py-5 px-10 hover:scale-110 transition ease-in-out delay-75 duration-700 hover:-translate-y-1 cursor-pointer"
+                            <Button className="mt-5 font-extrabold text-lg text-white rounded-xl bg-blue-700 py-5 px-10 hover-button"
                             onClick={() => setMeetingState('Instant')}
                             >
                                 Create Meeting
@@ -80,7 +85,7 @@ const MainMenu = () => {
                             />
 
 
-                            <Button className="mt-5 font-extrabold text-lg text-white rounded-xl bg-blue-700 py-5 px-10 hover:scale-110 transition ease-in-out delay-75 duration-700 hover:-translate-y-1 cursor-pointer"
+                            <Button className="mt-5 font-extrabold text-lg text-white rounded-xl bg-blue-700 py-5 px-10 hover-button"
                             onClick={() => router.push(values.link)}
                             >
                                 Join Meeting
@@ -131,7 +136,7 @@ const MainMenu = () => {
                                 className="inputs w-full rounded p-2 focus:outline-hidden focus:border-blue-500 focus:ring-3 focus:ring-blue-200  "
                             />
                         </div>
-                        <Button className='!mt-5 font-extrabold text-lg text-white rounded-xl bg-blue-700 py-5 px-10 hover:bg-blue-900 hover:scale-110 transition ease-in-out delay-75 duration-700 hover:-translate-y-1 cursor-pointer'
+                        <Button className='!mt-5 font-extrabold text-lg text-white rounded-xl bg-blue-700 py-5 px-10 hover-button'
                         onClick={() => setMeetingState('Schedule')}
                         >
                         Submit
