@@ -183,5 +183,75 @@
       border: none;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 根据设计调整 */
   }
+  
+  .dropdown-button {
+    cursor: pointer;
+    border-radius: 0.5rem;
+    background-color: #19232d;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #4c535b;
+    }
+
+    @media (min-width: 768px) {
+      padding: 0.75rem 1.5rem;  /* md:py-3 md:px-6 */
+    }
+  }
+
 }
 
+/* Stream CSS overrides */
+.str-video__call-stats {
+  max-width: 500px;
+  position: relative;
+}
+
+.str-video__speaker-layout__wrapper {
+  max-height: 700px;
+}
+
+.str-video__participant-details {
+  color: white;
+}
+
+.str-video__menu-container {
+  color: white;
+}
+
+.str-video__notification {
+  color: white;
+}
+
+.str-video__participant-list {
+  background-color: #1c1f2e !important;
+  padding: 10px !important;
+  border-radius: 10px;
+  color: white;
+  height:100%;
+}
+
+.str-video__call-controls__button {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+}
+
+/* Animation */
+
+.show-block {
+  width: 100%;
+  max-width: 350px;
+  display: block;
+  animation: show 0.7s forwards linear forwards;
+}
+
+/* 定义动画的关键帧，加载动画从0%到100%逐渐加速 */
+@keyframes show {
+  from {width: 0;}
+  to {width: 100%;}
+}

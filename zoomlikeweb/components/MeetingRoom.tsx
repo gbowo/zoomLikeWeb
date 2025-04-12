@@ -13,7 +13,7 @@ import EndCallButton from "./EndCallButton";
 
  
 
-// 左右声道布局
+// 会议页面布局（设置讲话人画面位置）
 type CallLayoutType = 'grid' | 'speaker-left' | 'speaker-right';
 
 const MeetingRoom = () => {
@@ -41,7 +41,7 @@ const MeetingRoom = () => {
 
     return (
         <section className="relative h-screen w-full overflow-hidden pt-4 text-white">
-            <Button className='ml-5 font-semibold bg-gray-900 hover:scale-110 rounded-3xl'
+            <Button className='ml-5 font-semibold bg-gray-900 hover-button rounded-3xl'
                 // 复制会议链接
                 onClick={() => {
                     const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}${pathname}`
@@ -73,7 +73,7 @@ const MeetingRoom = () => {
 
                 <DropdownMenu>
                     <div className="flex items-center">
-                        <DropdownMenuTrigger className="cursor-pointer rounded-2xl bg-[#19232d] px-4 py-2 hover:bg-[#4c535b]">
+                        <DropdownMenuTrigger className="dropdown-button">
                             <LayoutList size={20} className="text-white" />
                         </DropdownMenuTrigger>
                     </div>
@@ -90,7 +90,7 @@ const MeetingRoom = () => {
                 </DropdownMenu>
                 <CallStatsButton />
                 <button onClick={() => setShowParticipants((prev) => !prev)}>
-                    <div className="cursor-pointer rounded-2xl bg-[#19232d] px-4 py-2 hover:bg-[#4c535b]" >
+                    <div className="dropdown-button" >
                         <Users size={20} className="text-white" />
                     </div>
                 </button>
