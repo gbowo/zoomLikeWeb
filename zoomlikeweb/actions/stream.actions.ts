@@ -17,12 +17,14 @@ export const tokenProvider = async () => {
     const userId: string = user.id;
 
     // token有效期为1小时
+    const nowInSeconds = Math.floor(Date.now() / 1000);
     const validity = 60*60;
     // token生成信息
     const token = client.generateUserToken(
         {
             user_id: userId,
-            validity_in_seconds: validity
+            validity_in_seconds: validity,
+            iat: nowInSeconds - 60, // 允许60秒的误差
         }
     );
     return token as string;
