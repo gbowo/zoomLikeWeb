@@ -59,7 +59,7 @@ const MeetingSetup = ({
                 <DeviceSettings />
             </div>
             <Button 
-                className="rounded-3xl bg-blue-500 p-6 hover:bg-blue-800 hover:scale-125 transition ease-in-out delay-150 duration-300"
+                className="rounded-3xl bg-blue-500 p-6 hover-button transition ease-in-out delay-150 duration-300"
                 onClick={() => {
                     call.join();
                     call.updateCallMembers({
