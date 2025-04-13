@@ -59,7 +59,7 @@ const MeetingRoom = () => {
                 <div className="flex size-full max-w-[1000px] items-center animate-fade-in">
                     <CallLayout/>
                 </div>
-                <div className={cn('h-[calc(100vh-86px)] hidden ml-2', {
+                <div className={cn('h-[calc(100vh-86px)] hidden ml-1 mr-2 relative bottom-10 left-1', {
                     'show-block' : showParticipants,
                 })}
                 >
@@ -71,6 +71,7 @@ const MeetingRoom = () => {
             <div className="fixed bottom-0 flex w-full items-center justify-center gap-5">
                 <CallControls onLeave={()=> router.push(`/`)} />
 
+                {/* 布局展开栏 */}
                 <DropdownMenu>
                     <div className="flex items-center">
                         <DropdownMenuTrigger className="dropdown-button">

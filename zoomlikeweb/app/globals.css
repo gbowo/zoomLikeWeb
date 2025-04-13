@@ -174,7 +174,7 @@
   }
 
   .hover-button:hover {
-    background-color: #043566 !important; /* 调整背景颜色以使颜色变深 */
+    filter: brightness(85%); /* 调整这个百分比控制加深程度 */
     transform: translateY(-1px) scale(1.1);
   }
 
@@ -241,6 +241,10 @@
   justify-content: center; /* 水平居中 */
 }
 
+.str-video__call-controls__button:hover {
+  filter: brightness(50%); /* 调整这个百分比控制加深程度 */
+}
+
 /* Animation */
 
 .show-block {
@@ -250,7 +254,7 @@
   animation: show 0.7s forwards linear forwards;
 }
 
-/* 定义动画的关键帧，加载动画从0%到100%逐渐加速 */
+/* 定义动画的关键帧 */
 @keyframes show {
   from {width: 0;}
   to {width: 100%;}
